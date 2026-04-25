@@ -1,0 +1,50 @@
+# Annotations Reference: https://kubernetes-sigs.github.io/aws-load-balancer-controller/latest/guide/ingress/annotations/
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: api1-ingress
+  labels:
+    app: app1-nginx
+  annotations:
+    # Load Balancer Name
+    alb.ingress.kubernetes.io/load-balancer-name: api-ingress-ssl-alb-1
+    #kubernetes.io/ingress.class: "alb" (OLD INGRESS CLASS NOTATION - STILL WORKS BUT RECOMMENDED TO USE IngressClass Resource)
+    # Ingress Core Settings
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    # Health Check Settings
+    alb.ingress.kubernetes.io/healthcheck-protocol: HTTP 
+    alb.ingress.kubernetes.io/healthcheck-port: traffic-port
+    alb.ingress.kubernetes.io/healthcheck-path: /api1/hello
+    alb.ingress.kubernetes.io/healthcheck-interval-seconds: '15'
+    alb.ingress.kubernetes.io/healthcheck-timeout-seconds: '5'
+    alb.ingress.kubernetes.io/success-codes: '200'
+    alb.ingress.kubernetes.io/healthy-threshold-count: '2'
+    alb.ingress.kubernetes.io/unhealthy-threshold-count: '2'
+    ## SSL Settings
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}, {"HTTP":80}]'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:379047601975:certificate/82c89783-6fbd-4064-8652-ecf488f3067a
+    #alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-TLS-1-1-2017-01 #Optional (Picks default if not used)
+spec:
+  ingressClassName: my-aws-ingress-class # Ingress Class
+  defaultBackend:
+    service:
+      name: api-1-nodeport-service
+      port:
+        number: 8080
+  rules:
+    - http:
+        paths:
+          - path: /api2
+            pathType: Prefix 
+            backend: 
+              service: 
+                name: api-2-nodeport-service
+                port:
+                  number: 8080
+          - path: /api3
+            pathType: Prefix 
+            backend:
+              service:
+                name: api-3-nodeport-service
+                port: 
+                  number: 8080
