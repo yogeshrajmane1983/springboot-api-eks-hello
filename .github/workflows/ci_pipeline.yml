@@ -1,7 +1,7 @@
 name: ci pipeline
 on:
-  push:
-    branches: [main]
+#  push:
+#    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -28,4 +28,8 @@ jobs:
           mvn -version
       - name: Build with maven
         run: |
-          mvn clean install -DskipTests 
+          mvn clean install -DskipTests
+      - name: upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: springboot-api-eks-hello 
