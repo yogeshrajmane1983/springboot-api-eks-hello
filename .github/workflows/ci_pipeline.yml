@@ -33,3 +33,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: springboot-api-eks-hello 
+          path: target/springboot-api-eks-hello*.jar
