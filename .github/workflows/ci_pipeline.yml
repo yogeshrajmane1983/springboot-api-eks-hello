@@ -74,4 +74,5 @@ jobs:
                 nohup java -jar springboot-api-eks-hello.jar --server.port=8080 > out.log 2>&1 &
                 echo "jar is running"
                 ps -ef | grep java
+                rm -rf key.pem
                 EOF
