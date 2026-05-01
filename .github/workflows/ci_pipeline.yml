@@ -17,6 +17,7 @@ jobs:
             uses: snyk/actions/node@master
             env:
               SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+              JAVA_HOME: ''
 
             #setup java
           - name: Set up JDK 25
