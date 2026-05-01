@@ -13,6 +13,9 @@ jobs:
             #with:
             #path: /home/ubuntu/myrepo
           
+          - name: Clean target manually
+            run: rm -rf target
+          
           - name: Snyk SCA (Software Component Analysis)
             uses: snyk/actions/maven-3-jdk-17@master
             continue-on-error: true # <--- Keeps pipeline going
