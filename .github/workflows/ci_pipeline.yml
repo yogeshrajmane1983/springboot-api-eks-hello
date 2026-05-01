@@ -41,7 +41,7 @@ jobs:
             #mvn build 
           - name: Build with maven
             run: |
-              mvn clean install -DskipTests
+              mvn clean install -DskipTests -e
             
             #artifact upload 
           - name: upload artifact
