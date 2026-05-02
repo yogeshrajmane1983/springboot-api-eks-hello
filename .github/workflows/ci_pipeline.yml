@@ -52,11 +52,11 @@ jobs:
 
           - name: Build project + Run Sonar
             run: |
-              run: mvn clean verify sonar:sonar \
+              mvn clean verify sonar:sonar \
               -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
               -Dsonar.organization=${{ secrets.SONAR_ORG_KEY }} \
               -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
-              -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+              -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
               -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
 
             #artifact upload 
