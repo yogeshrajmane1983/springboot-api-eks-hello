@@ -50,7 +50,7 @@ jobs:
               sudo rm -rf /home/runner/work/springboot-api-eks-hello/springboot-api-eks-hello/target
               echo "Current directory: $(pwd)"
               ls -la /home/runner/work/springboot-api-eks-hello/springboot-api-eks-hello
-              echo "Running mvn clean install -DskipTests -e"
+              echo " mvn clean verify sonar:sonar"
               mvn clean verify sonar:sonar \
               -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
               -Dsonar.organization=${{ secrets.SONAR_ORG_KEY }} \
