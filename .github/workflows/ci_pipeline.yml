@@ -16,6 +16,7 @@ jobs:
           - name: Clean target manually
             run: rm -rf target
           
+          # Snyk SAST (Static Application Security Testing)
           - name: Snyk SCA (Software Component Analysis)
             uses: snyk/actions/maven-3-jdk-17@master
             continue-on-error: true # <--- Keeps pipeline going
@@ -23,6 +24,19 @@ jobs:
               SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
               JAVA_HOME: ''
 
+          - name: SonarQube Scan (Static Application Security Testing)
+            uses: SonarSource/sonarqube-scan-action@v8.0.0
+            env:
+          # Authentication & Server (Best kept in Secrets)
+              SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+              SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+              # Project Identification (Can be Secrets or hardcoded)
+              SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
+              SONAR_ORGANIZATION: ${{ secrets.SONAR_ORG_NAME }}
+              # Source Code Location
+              # Use 'src' for most apps, or '.' for the root directory
+              SONAR_SOURCES: src 
+              
             #setup java
           - name: Set up JDK 25
             uses: actions/setup-java@v4
