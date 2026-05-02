@@ -44,17 +44,22 @@ jobs:
               mvn -version
             
             #mvn build 
-          - name: Build with maven
+          - name: remove target
             run: |
               sudo rm -rf /home/runner/work/springboot-api-eks-hello/springboot-api-eks-hello/target
               echo "Current directory: $(pwd)"
               ls -la /home/runner/work/springboot-api-eks-hello/springboot-api-eks-hello
-              echo " mvn clean verify sonar:sonar"
-              mvn clean verify
-              mvn jacoco:report
-              echo "Checking jacoco report..."
-              ls -la target/site/jacoco || echo "No report found"
-              mvn sonar:sonar \
+          
+          - name: Build project
+            run: mvn clean verify
+
+          - name: Debug JaCoCo report
+            run: |
+              echo "=== Checking JaCoCo report ==="
+              ls -la target/site/jacoco || echo "No jacoco folder found"
+
+          - name: Run Sonar
+            run: mvn sonar:sonar \
               -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
               -Dsonar.organization=${{ secrets.SONAR_ORG_KEY }} \
               -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
