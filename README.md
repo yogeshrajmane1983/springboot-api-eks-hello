@@ -63,22 +63,6 @@ springboot-api-eks-hello/
 
 ---
 
-## ▶️ How to Run Locally
-
-```bash
-# Clone repo
-git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git
-
-cd springboot-api-eks-hello
-
-# Build & test with coverage
-mvn clean verify
-
-# Run application
-mvn spring-boot:run
-
----
-
 **🔐 Security**
 Integrated Snyk for dependency vulnerability scanning
 Enables shift-left security in CI pipeline
@@ -100,3 +84,21 @@ Add Quality Gate enforcement (fail build on low coverage)
 PR-based Sonar checks
 Deployment to AWS EKS
 Multi-stage CI/CD pipeline
+
+---
+
+## ▶️ How to Run Locally
+
+```bash
+# Clone repo
+git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git
+
+cd springboot-api-eks-hello
+
+# Build & test with coverage
+mvn clean verify
+
+# Run application
+mvn spring-boot:run
+
+
