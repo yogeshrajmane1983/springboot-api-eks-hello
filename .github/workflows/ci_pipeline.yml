@@ -27,12 +27,11 @@ jobs:
               JAVA_HOME: ''
               
             #setup java
-          - name: Set up JDK 25
+          - name: Set up JAVA 17
             uses: actions/setup-java@v4
             with:
-              java-version: '25'
-              distribution: 'oracle'
-              cache: 'maven'
+              distribution: 'temurin'
+              java-version: '17'
 
             # dependencies setup
           - name: Install dependencies
@@ -53,11 +52,14 @@ jobs:
               echo " mvn clean verify sonar:sonar"
               mvn clean verify
               mvn jacoco:report
+              echo "Checking jacoco report..."
+              ls -la target/site/jacoco || echo "No report found"
               mvn sonar:sonar \
               -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
               -Dsonar.organization=${{ secrets.SONAR_ORG_KEY }} \
               -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
               -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+              -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
 
             #artifact upload 
           - name: upload artifact
