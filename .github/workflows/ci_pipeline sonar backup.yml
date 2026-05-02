@@ -1,4 +1,4 @@
-name: ci pipeline
+name: ci pipeline - sonar backup
 on:
 #  push:
 #    branches: [main]
@@ -51,11 +51,20 @@ jobs:
               echo "Current directory: $(pwd)"
               ls -la /home/runner/work/springboot-api-eks-hello/springboot-api-eks-hello
               echo "Running mvn clean install -DskipTests -e"
-              mvn clean verify sonar:sonar \
-              -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
-              -Dsonar.organization=${{ secrets.SONAR_ORG_KEY }} \
-              -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
-              -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+              mvn clean install -DskipTests -e
+
+            # SonarQube Scan (Static Application Security Testing)
+          - name: SonarQube Scan (Static Application Security Testing)
+            uses: SonarSource/sonarqube-scan-action@v8.0.0
+            with:
+              args: >
+                -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+                -Dsonar.organization=${{ secrets.SONAR_ORG_KEY }}
+                -Dsonar.sources=src
+                -Dsonar.java.binaries=target/classes
+            env:
+              SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+              SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
             #artifact upload 
           - name: upload artifact
