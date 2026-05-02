@@ -77,11 +77,15 @@ mvn clean verify
 # Run application
 mvn spring-boot:run
 
-## **🔐 Security**
+---
+
+**🔐 Security**
 Integrated Snyk for dependency vulnerability scanning
 Enables shift-left security in CI pipeline
 
-## **📈 Code Quality**
+---
+
+**📈 Code Quality**
 Integrated SonarCloud
 Tracks:
 Code smells
@@ -89,7 +93,9 @@ Bugs
 Coverage
 Maintainability
 
-## **🚀 Future Improvements**
+---
+
+**🚀 Future Improvements**
 Add Quality Gate enforcement (fail build on low coverage)
 PR-based Sonar checks
 Deployment to AWS EKS
