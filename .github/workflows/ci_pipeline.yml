@@ -44,7 +44,7 @@ jobs:
             #mvn build 
           - name: Build with maven
             run: |
-              rm -rf /home/runner/work/springboot-api-eks-hello/springboot-api-eks-hello/target
+              sudo rm -rf /home/runner/work/springboot-api-eks-hello/springboot-api-eks-hello/target
               echo "Current directory: $(pwd)"
               ls -la /home/runner/work/springboot-api-eks-hello/springboot-api-eks-hello
               echo "Running mvn clean install -DskipTests -e"
