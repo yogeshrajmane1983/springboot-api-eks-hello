@@ -1,0 +1,57 @@
+name: ci pipeline
+on:
+#  push:
+#    branches: [main]
+  workflow_dispatch:
+
+jobs:
+    # code build job
+    build:
+        runs-on: self-hosted
+        steps:
+          - uses: actions/checkout@v3
+            with:
+              fetch-depth: 0
+            #with:
+            #path: /home/ubuntu/myrepo
+          
+          - name: Clean target manually
+            run: rm -rf target
+          
+          # Snyk SAST (Static Application Security Testing)
+          - name: Snyk SCA (Software Component Analysis)
+            uses: snyk/actions/maven-3-jdk-17@master
+            continue-on-error: true # <--- Keeps pipeline going
+            env:
+              SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+              JAVA_HOME: ''
+              
+          - name: check versions
+            run: |
+              java -version
+              mvn -version
+            
+            #mvn build 
+          - name: remove target
+            run: |
+              sudo rm -rf /home/runner/work/springboot-api-eks-hello/springboot-api-eks-hello/target
+              echo "Current directory: $(pwd)"
+              ls -la /home/runner/work/springboot-api-eks-hello/springboot-api-eks-hello
+
+          - name: Build project + Run Sonar
+            run: |
+              mvn clean verify sonar:sonar \
+              -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
+              -Dsonar.organization=${{ secrets.SONAR_ORG_KEY }} \
+              -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
+              -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
+              -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+
+            #artifact upload 
+          - name: upload artifact
+            uses: actions/upload-artifact@v4
+            with:
+              name: springboot-api-eks-hello 
+              path: target/springboot-api-eks-hello*.jar
+
+              
