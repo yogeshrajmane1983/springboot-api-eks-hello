@@ -1,4 +1,4 @@
-name: ci pipeline
+name: self-runner pipeline
 on:
 #  push:
 #    branches: [main]
