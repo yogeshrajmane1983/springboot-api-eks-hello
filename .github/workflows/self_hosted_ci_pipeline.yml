@@ -23,18 +23,8 @@ jobs:
             #mvn build 
           - name: remove target
             run: |
-              sudo rm -rf /home/runner/work/springboot-api-eks-hello/springboot-api-eks-hello/target
               echo "Current directory: $(pwd)"
-              ls -la /home/runner/work/springboot-api-eks-hello/springboot-api-eks-hello
-
-          - name: Build project + Run Sonar
-            run: |
-              mvn clean verify sonar:sonar \
-              -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
-              -Dsonar.organization=${{ secrets.SONAR_ORG_KEY }} \
-              -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
-              -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
-              -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+              echo "Current directory: $(ls -la)"
 
             #artifact upload 
           - name: upload artifact
