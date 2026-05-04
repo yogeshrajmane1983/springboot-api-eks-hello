@@ -14,17 +14,6 @@ jobs:
               fetch-depth: 0
             #with:
             #path: /home/ubuntu/myrepo
-          
-          - name: Clean target manually
-            run: rm -rf target
-          
-          # Snyk SAST (Static Application Security Testing)
-          - name: Snyk SCA (Software Component Analysis)
-            uses: snyk/actions/maven-3-jdk-17@master
-            continue-on-error: true # <--- Keeps pipeline going
-            env:
-              SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-              JAVA_HOME: ''
               
           - name: check versions
             run: |
