@@ -26,6 +26,10 @@ jobs:
               echo "Current directory: $(pwd)"
               echo "Current directory: $(ls -la)"
 
+          - name: Build project
+            run: |
+              mvn clean install -e
+
             #artifact upload 
           - name: upload artifact
             uses: actions/upload-artifact@v4
